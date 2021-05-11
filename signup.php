@@ -1,3 +1,21 @@
+<!-- ?php
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+    include 'dbConnect.php';
+    $name = $_POST["name"];
+    $course = $_POST["course"];
+    $school = $_POST["school"];
+    $yop = $_POST["yop"];
+    $email = $_POST["email"];
+    $mobile = $_POST["mobile"];
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+    $confirmPassword = $_POST["confirmPassword"];
+}
+
+?> -->
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,6 +51,7 @@
     display: inline-block;
     border: 1px solid #ccc;
     box-sizing: border-box;
+    border-radius: 12px;
   }
 
   button {
@@ -43,6 +62,7 @@
     border: none;
     cursor: pointer;
     width: 100%;
+    border-radius: 12px;
   }
 
   button:hover {
@@ -79,6 +99,7 @@
   select {
         width: 100px;
         height: 40px;
+        border-radius: 12px;
         /* margin: 10px; */
         /* padding:10px; */
     }
@@ -97,51 +118,47 @@
 
     <div class="column">
       <div class="formScroll">
-        <form action="/action_page.php" method="post">
+        <form action="/chatBot/index.php" method="post">
           <div class="container" style="background-color:#f1f1f1">
 
             <label for="name"><b>Name</b></label>
-            <input type="text" required>
+            <input type="text" name = "name" required>
 
             <label for="course"><b>course</b></label>
-            <input type="text" required>
+            <input type="text"  name ="course" required>
 
             <label for="school"><b>school</b></label>
-            <input type="text" required>
+            <input type="text" name = "school" required>
 
             <label for="yop" style="white-space:pre-line;"><b>year of graduation</b></label>
             <br>
             <br>
-            <select name="yop">
+            <select name="yop" required>
               <option value="2021">2021</option>
               <option value="2022">2022</option>
               <option value="2023">2023</option>
               <option value="2024">2024</option>
               <option value="2025">2025</option>
               <option value="2026">2026</option>
-              <option value="2027">2027</option>
-              <option value="2028">2028</option>
-              <option value="2029">2029</option>
-              <option value="2030">2030</option>
             </select>
            
             <br>
             <br>
 
             <label for="email"><b>Email</b></label>
-            <input type="text" required>
+            <input type="text"name = "email" required>
 
-            <label for="mob"><b>Mobile Number</b></label>
-            <input type="text" required>
+            <label for="mobile"><b>Mobile Number</b></label>
+            <input type="text" name = "mobile" required>
             
-            <label for="uname"><b>Username</b></label>
-            <input type="text" required>
+            <label for="username"><b>Username</b></label>
+            <input type="text" name = "username" required>
 
             <label for="psw"><b>Password</b></label>
-            <input type="password" name="psw" required>
+            <input type="password" name="password" required>
 
             <label for="psw"><b>Confirm Password</b></label>
-            <input type="password" name="psw" required>
+            <input type="password" name="confirmPassword" required>
               
             <button type="submit">Submit</button>
       

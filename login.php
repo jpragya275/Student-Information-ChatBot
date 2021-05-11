@@ -1,3 +1,31 @@
+<?php
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+    include 'dbConnect.php';
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+
+    $sql = "SELECT * FROM `signup` WHERE username = '$username' ";
+    $result = mysqli_query($con, $sql);
+    if(mysqli_num_rows($result) == 1){
+        while($row = mysqli_fetch_assoc($result)){
+          if(password_verify($password, $row['password'])){
+            //////////////****************************direct to the home page******************************//////////////////////
+            echo '<script>alert("Login Successful!"); window.location.href = "https://google.com"; </script>' ;
+            session_start();
+            $_SESSION['loggedin'] = true;
+            $_SESSION['username'] = $username;
+          }
+          else{
+            echo '<script>alert("Invalid Credentials! Try Again."); window.location.href = "/chatBot/login.php"; </script>' ;
+          }
+        }
+    }
+    else{
+        echo '<script>alert("Invalid Credentials! Try Again."); window.location.href = "/chatBot/login.php"; </script>' ;
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,6 +59,7 @@
     display: inline-block;
     border: 1px solid #ccc;
     box-sizing: border-box;
+    border-radius: 12px;
   }
 
   button {
@@ -100,19 +129,19 @@
     <div class="column">
       <br>
       <div class="formScroll">
-        <form action="/action_page.php" method="post">
+        <form action="/chatBot/login.php" method="post">
 
           <div class="container" style="background-color:#f1f1f1">
             <label for="uname"><b>Username</b></label>
-            <input style="border-radius: 12px;" type="text" placeholder="Enter Username" name="uname" required>
+            <input type="text" placeholder="Enter Username" name="username" required>
       
             <label for="psw"><b>Password</b></label>
-            <input style="border-radius: 12px;" type="password" placeholder="Enter Password" name="psw" required>
+            <input type="password" placeholder="Enter Password" name="password" required>
               
             <button type="login">Login</button>
           
-            <button type = "button" onclick = "document.location='file:///D:/MCA%204th%20Sem/Web%20Dev/Chatbot/signup.html'" class = "createNew">Create New Account </button>
-            <span class="psw"> <a href="file:///D:/MCA%204th%20Sem/Web%20Dev/Chatbot/forgotPassword.html">Forgot password?</a></span>
+            <button type = "button" onclick = "document.location='/chatBot/signup.php'" class = "createNew">Create New Account </button>
+            <span class="psw"> <a href="/chatBot/forgotPassword.php">Forgot password?</a></span>
           </div>
         </form>
       </div>
