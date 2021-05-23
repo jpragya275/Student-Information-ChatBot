@@ -3,14 +3,27 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     include 'dbConnect.php';
     $username = $_POST["username"];
     $password = $_POST["password"];
+    $admin = $_POST["admin"];
 
-    $sql = "SELECT * FROM `signup` WHERE username = '$username' ";
-    $result = mysqli_query($con, $sql);
-    if(mysqli_num_rows($result) == 1){
+    if(isset($admin)){
+      $sql = "SELECT * FROM `signup` WHERE username = '$username' AND password = '$password' ";
+      $result = mysqli_query($con, $sql);
+      if(mysqli_num_rows($result) == 1){
+        //////////////****************************direct to admin's home page******************************//////////////////////
+        echo '<script>alert("Login as Admin Successful!"); window.location.href = "adminprof.php"; </script>' ;
+        session_start();
+        $_SESSION['loggedin'] = true;
+        $_SESSION['username'] = $username;
+      }
+    }
+    else{
+      $sql = "SELECT * FROM `signup` WHERE username = '$username' ";
+      $result = mysqli_query($con, $sql);
+      if(mysqli_num_rows($result) == 1){
         while($row = mysqli_fetch_assoc($result)){
           if(password_verify($password, $row['password'])){
             //////////////****************************direct to the home page******************************//////////////////////
-            echo '<script>alert("Login Successful!"); window.location.href = "https://google.com"; </script>' ;
+            echo '<script>alert("Login Successful!"); window.location.href = "user.php"; </script>' ;
             session_start();
             $_SESSION['loggedin'] = true;
             $_SESSION['username'] = $username;
@@ -19,9 +32,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             echo '<script>alert("Invalid Credentials! Try Again."); window.location.href = "/chatBot/login.php"; </script>' ;
           }
         }
-    }
-    else{
-        echo '<script>alert("Invalid Credentials! Try Again."); window.location.href = "/chatBot/login.php"; </script>' ;
+      }
+      else{
+          echo '<script>alert("Invalid Credentials! Try Again."); window.location.href = "/chatBot/login.php"; </script>' ;
+      }
     }
 }
 ?>
@@ -117,13 +131,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 </style>
 
 <body>
-  <h1>Welcome to JNU chatbot!</h1>
+  <h1>Welcome to Student Information chatbot!</h1>
   <br><br><br>
 
   <div class="row">
     <div class="column">
       <img src = "cb1.png" >
-      <p style="color:black; font-size: large; text-align:center;" >The JNU chatbot is here to solve your queries!</p>
+      <p style="color:black; font-size: large; text-align: center; " >The chatbot is here to solve your queries!</p>
     </div>
     
     <div class="column">
@@ -139,6 +153,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <input type="password" placeholder="Enter Password" name="password" required>
               
             <button type="login">Login</button>
+            <input type="checkbox" id="admin" name="admin" value="admin">
+            <label for="admin">Login as Admin</label><br>
           
             <button type = "button" onclick = "document.location='/chatBot/signup.php'" class = "createNew">Create New Account </button>
             <span class="psw"> <a href="/chatBot/forgotPassword.php">Forgot password?</a></span>

@@ -113,7 +113,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
   <div class="row">
     <div class="column">
       <img src = "cb1.png" >
-      <p style="color:black; font-size: large; text-align:center;" >Let the JNU bot know you!</p>
+      <p style="color:black; font-size: large; text-align:center;" >Let the bot know you!</p>
     </div>
 
     <div class="column">
